@@ -30,3 +30,36 @@ class GroupExample(Scene):
         s3.set_fill(GOLD_B, 0.5)
         self.play(ApplyMethod(arrow.next_to, g3, DOWN))
         self.wait()
+
+
+class TwoPointer(Scene):
+    def construct(self):
+        # 1
+        title = TextMobject("LeetDev.io", tex_to_color_map={"LeetDev": RED_C, ".io": WHITE}).scale(2)
+        self.play(GrowFromCenter(title))
+        
+        #2
+        algorithm_text = TextMobject("2 Pointer Algorithm").scale(2)
+        self.play(ReplacementTransform(title, algorithm_text))
+
+        #3
+        arr = []
+        array_object = Group()
+        prev = None
+        for i in range(6):
+            obj = {}
+            value = TextMobject(str(i))
+            square = Square().surround(value).set_width(1).set_height(1)
+            group = Group(value, square).shift(RIGHT * i)
+            # obj['value'] = value
+            # obj['square'] = square
+            # obj['group'] = group
+            # arr.append(obj)
+            array_object.add(group)
+
+        array_object.center()
+
+        # Do a better animation
+        self.play(FadeOut(algorithm_text), FadeIn(array_object))
+
+        
