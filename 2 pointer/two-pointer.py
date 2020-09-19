@@ -56,3 +56,20 @@ class TwoPointer(Scene):
         self.play(ApplyMethod(back_arrow.next_to, arr[2]['group'], DOWN, run_time=arrow_runtime))
         self.play(ApplyMethod(back_arrow.next_to, arr[3]['group'], DOWN, run_time=arrow_runtime))
         self.play(ApplyMethod(back_arrow.next_to, arr[4]['group'], DOWN, run_time=arrow_runtime))
+
+class Six(Scene):
+    def construct(self):
+        problem = Text("Problem Introduction", color=WHITE)
+
+        self.add(problem)
+        self.wait(2)
+
+class Seven(Scene):
+    def construct(self):
+        first = Text("Given an array of integers and a target integer", color=WHITE)
+        second = Text("return indices of two numbers such that they add up to target.", color=WHITE)
+        second.next_to(first, DOWN)
+
+        self.play(Write(first, run_time=1))
+        self.play(Write(second, run_time=1))
+        
