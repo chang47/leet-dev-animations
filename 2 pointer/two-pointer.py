@@ -94,16 +94,53 @@ class HighLevel(Scene):
         five = TextMobject("* Is there guaranteed to be an answer?").scale(1.25)
 
         # https://www.reddit.com/r/manim/comments/iupbe8/how_to_left_align_textmobject/
-        self.play(FadeIn(rec))
+        self.play(Write(rec, run_time=0.75))
         rec.add(second)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
-        self.play(FadeIn(second))
+        self.play(Write(second, run_time=0.75))
         rec.add(third)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
-        self.play(FadeIn(third))
+        self.play(Write(third, run_time=0.75))
         rec.add(four)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
-        self.play(FadeIn(four))
+        self.play(Write(four, run_time=0.75))
         rec.add(five)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
-        self.play(FadeIn(five))
+        self.play(Write(five, run_time=0.75))
+
+        # Fade out the rectangle holding all the text 
+        self.play(FadeOut(rec))
+
+        #10 N^2 array
+        arr = []
+        array_object = Group()
+        prev = None
+        for i in range(6):
+            obj = {}
+            value = TextMobject(str(i))
+            square = Square().surround(value).set_width(1).set_height(1)
+            group = Group(value, square).shift(RIGHT * i)
+            obj['value'] = value
+            obj['square'] = square
+            obj['group'] = group
+            arr.append(obj)
+            array_object.add(group)
+
+        array_object.center()
+
+        self.play(FadeIn(array_object))
+
+        arrow1 = Arrow(DOWN, UP)
+        arrow1.scale(0.5)
+        arrow1.next_to(arr[0]['group'], DOWN)
+
+        arrow2 = Arrow(DOWN, UP)
+        arrow2.scale(0.5)
+        arrow2.next_to(arr[0]['group'], DOWN)
+
+        self.play(FadeIn(arrow1), FadeIn(arrow2))
+        arrow_runtime=1
+        for i in range(6):
+            self.play(ApplyMethod(arrow1.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime), ApplyMethod(arrow2.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime))
+            for j in range(i, 6):
+                self.play(ApplyMethod(arrow2.next_to, arr[j]['group'], DOWN, run_time=arrow_runtime))
