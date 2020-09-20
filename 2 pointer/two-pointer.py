@@ -57,6 +57,8 @@ class TwoPointer(Scene):
         self.play(ApplyMethod(back_arrow.next_to, arr[3]['group'], DOWN, run_time=arrow_runtime))
         self.play(ApplyMethod(back_arrow.next_to, arr[4]['group'], DOWN, run_time=arrow_runtime))
 
+        self.play(FadeOut(array_object), FadeOut(front_arrow), FadeOut(back_arrow))
+
 class Six(Scene):
     def construct(self):
         problem = Text("Problem Introduction", color=WHITE)
@@ -73,3 +75,34 @@ class Seven(Scene):
         self.play(Write(first, run_time=1))
         self.play(Write(second, run_time=1))
         
+class HighLevel(Scene):
+    def construct(self):
+        # 8 Show the problem introduction Text
+        problem = Text("Problem Introduction", color=WHITE).scale(2)
+
+        self.play(FadeIn(problem))
+        self.play(FadeOut(problem))
+        
+        # 9 Show questions to ask
+        first = TextMobject("Questions to ask:").scale(2)
+        rec = VGroup(first)
+        rec.move_to(UP*2 + LEFT*2)
+
+        second = TextMobject("* Is the array sorted?").scale(1.25)
+        third = TextMobject("* What does my input look like?").scale(1.25)
+        four = TextMobject("* Will the sum cause integer overflow?").scale(1.25)
+        five = TextMobject("* Is there guaranteed to be an answer?").scale(1.25)
+
+        self.play(FadeIn(rec))
+        rec.add(second)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(FadeIn(second))
+        rec.add(third)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(FadeIn(third))
+        rec.add(four)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(FadeIn(four))
+        rec.add(five)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(FadeIn(five))
