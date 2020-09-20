@@ -93,6 +93,7 @@ class HighLevel(Scene):
         four = TextMobject("* Will the sum cause integer overflow?").scale(1.25)
         five = TextMobject("* Is there guaranteed to be an answer?").scale(1.25)
 
+        # https://www.reddit.com/r/manim/comments/iupbe8/how_to_left_align_textmobject/
         self.play(FadeIn(rec))
         rec.add(second)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
