@@ -141,6 +141,66 @@ class HighLevel(Scene):
         self.play(FadeIn(arrow1), FadeIn(arrow2))
         arrow_runtime=1
         for i in range(6):
+            # Move both indexes together
             self.play(ApplyMethod(arrow1.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime), ApplyMethod(arrow2.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime))
             for j in range(i, 6):
                 self.play(ApplyMethod(arrow2.next_to, arr[j]['group'], DOWN, run_time=arrow_runtime))
+
+
+    
+class BinarySearch(Scene):
+    def construct(self):
+        #13 N Log N binary Search
+        arr = []
+        array_object = Group()
+        prev = None
+
+        # 0 1 2 3 4 5 6 7
+        # target = 5 
+        for i in range(8):
+            obj = {}
+            value = TextMobject(str(i))
+            square = Square().surround(value).set_width(1).set_height(1)
+            group = Group(value, square).shift(RIGHT * i)
+            obj['group'] = group
+            arr.append(obj)
+            array_object.add(group)
+
+        array_object.center()
+
+        self.play(FadeIn(array_object))
+
+        arrow = Arrow(DOWN, UP)
+        arrow.scale(0.5)
+        arrow.next_to(arr[0]['group'], DOWN)
+
+        self.play(FadeIn(arrow))
+
+        lo = TextMobject("lo")
+        lo.next_to(arr[1]['group'], DOWN)
+        mid = TextMobject("mid")
+        mid.next_to(arr[4]['group'], DOWN)
+        hi = TextMobject("hi")
+        hi.next_to(arr[7]['group'], DOWN)
+
+        # show lo,hi, and then show mid
+        self.play(FadeIn(lo), FadeIn(hi))
+        self.play(FadeIn(mid))
+
+        # move lo to mid+1 (5) because mid + i is too small
+        self.play(FadeOut(mid))
+        self.play(ApplyMethod(lo.next_to, arr[5]['group'], DOWN))
+        
+        # show mid at index 6
+        mid.next_to(arr[6]['group'], DOWN)
+        self.play(FadeIn(mid))
+
+        # move hi to mid-1 (5) because mid + i is too big
+        self.play(FadeOut(mid))
+        self.play(ApplyMethod(hi.next_to, lo, DOWN))
+
+        # show mid at index 5
+        mid.next_to(hi, DOWN)
+        self.play(FadeIn(mid))
+
+        # TODO add the text for binary sum variables
