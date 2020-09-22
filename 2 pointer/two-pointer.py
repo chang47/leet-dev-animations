@@ -168,11 +168,40 @@ class BinarySearch(Scene):
 
         self.play(FadeIn(array_object))
 
+        index_text = TextMobject("index:")
+        low_text = TextMobject("lo:")
+        mid_text = TextMobject("mid:")
+        high_text = TextMobject("hi:")
+
+        text_group = VGroup()
+        text_group.add(index_text)
+        text_group.add(low_text)
+        text_group.add(mid_text)
+        text_group.add(high_text)
+        text_group.arrange(DOWN, center=False, aligned_edge=LEFT)
+        text_group.to_corner(corner=UP+LEFT)
+
+        index_value = TextMobject("1")
+        low_value = TextMobject("2")
+        mid_value = TextMobject("3")
+        high_value = TextMobject("4")
+
+        value_group = VGroup()
+        value_group.add(index_value)
+        value_group.add(low_value)
+        value_group.add(mid_value)
+        value_group.add(high_value)
+        value_group.arrange(DOWN, center=False, aligned_edge=LEFT)
+        value_group.next_to(text_group, RIGHT*2)
+
+        self.play(FadeIn(text_group))
+        self.play(FadeIn(value_group))
+
         arrow = Arrow(DOWN, UP)
         arrow.scale(0.5)
         arrow.next_to(arr[0]['group'], DOWN)
 
-        self.play(FadeIn(arrow))
+        self.play(FadeIn(arrow)) 
 
         lo = TextMobject("lo")
         lo.next_to(arr[1]['group'], DOWN)
