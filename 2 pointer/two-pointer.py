@@ -145,8 +145,6 @@ class HighLevel(Scene):
             self.play(ApplyMethod(arrow1.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime), ApplyMethod(arrow2.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime))
             for j in range(i, 6):
                 self.play(ApplyMethod(arrow2.next_to, arr[j]['group'], DOWN, run_time=arrow_runtime))
-
-
     
 class BinarySearch(Scene):
     def construct(self):
@@ -204,3 +202,41 @@ class BinarySearch(Scene):
         self.play(FadeIn(mid))
 
         # TODO add the text for binary sum variables
+
+class BruteForce(Scene):
+    def construct(self):
+        nums = []
+        nums_group = Group()
+        i = 0
+        for num in [2,7,11,15]:
+            value = TextMobject(str(num))
+            square = Square().surround(value).set_width(1).set_height(1)
+            group = Group(value, square)
+            nums_group.add(group.shift(RIGHT * i))
+            nums.append({
+                'group': group,
+                'num': num
+            })
+            i+=1
+
+        nums_group.set_x(-3)
+        nums_group.set_y(2)
+        self.play(FadeIn(nums_group))
+
+        lo_ptr = Arrow(DOWN, UP).scale(0.5).next_to(nums[0]['group'], DOWN)
+        
+        for lo in range(3):
+            
+            self.play(ApplyMethod(lo_ptr.next_to, nums[lo]['group'], DOWN))
+            hi_ptr = Arrow(DOWN, UP, color=BLUE).scale(0.5).next_to(nums[lo]['group'], DOWN)
+
+            for hi in range(lo + 1, 4):
+                self.play(ApplyMethod(hi_ptr.next_to, nums[hi]['group'], DOWN))
+                total = TextMobject(f"sum = {nums[lo]['num'] + nums[hi]['num']}")
+                total.next_to(nums_group, UP)
+                self.play(Write(total, run_time=.5))
+                self.wait(.5)
+                self.play(FadeOut(total))
+
+
+            self.play(FadeOut(hi_ptr))
