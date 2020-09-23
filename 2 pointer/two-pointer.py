@@ -165,50 +165,39 @@ class BinarySearch(Scene):
             array_object.add(group)
 
         array_object.center()
-
         self.play(FadeIn(array_object))
 
+        # Setup variable text
         index_text = TextMobject("index:")
         low_text = TextMobject("lo:")
         mid_text = TextMobject("mid:")
         high_text = TextMobject("hi:")
-
         text_group = VGroup()
         text_group.add(index_text)
         text_group.add(low_text)
-        text_group.add(mid_text)
         text_group.add(high_text)
-        text_group.arrange(DOWN, center=False, aligned_edge=LEFT)
+        text_group.add(mid_text)
         text_group.to_corner(corner=UP+LEFT)
+        text_group.arrange(DOWN, center=False, aligned_edge=LEFT)
 
-        index_value = TextMobject("1")
-        low_value = TextMobject("2")
-        mid_value = TextMobject("3")
-        high_value = TextMobject("4")
-
+        # Setup variable value
+        index_value = TextMobject("0")
+        low_value = TextMobject("1")
+        mid_value = TextMobject("4")
+        high_value = TextMobject("7")
         value_group = VGroup()
         value_group.add(index_value)
         value_group.add(low_value)
-        value_group.add(mid_value)
         value_group.add(high_value)
+        value_group.add(mid_value)
         value_group.arrange(DOWN, center=False, aligned_edge=LEFT)
         value_group.next_to(text_group, RIGHT*2)
-
-        self.play(FadeIn(text_group))
-        self.play(FadeIn(value_group))
-
-        # TODO write a function that will set the position and probably return a new object for us to continue replacing
-        new_value = TextMobject("5")
-        new_value.set_x(low_value.get_x()).set_y(low_value.get_y())
-
-        self.play(FadeIn(new_value), FadeOut(low_value))
-        # self.play(ReplacementTransform(new_value, low_value))
 
         arrow = Arrow(DOWN, UP)
         arrow.scale(0.5)
         arrow.next_to(arr[0]['group'], DOWN)
 
-        self.play(FadeIn(arrow)) 
+        self.play(FadeIn(arrow), FadeIn(index_text), FadeIn(index_value)) 
 
         lo = TextMobject("lo")
         lo.next_to(arr[1]['group'], DOWN)
@@ -218,12 +207,15 @@ class BinarySearch(Scene):
         hi.next_to(arr[7]['group'], DOWN)
 
         # show lo,hi, and then show mid
-        self.play(FadeIn(lo), FadeIn(hi))
-        self.play(FadeIn(mid))
+        self.play(FadeIn(lo), FadeIn(hi), FadeIn(low_value), FadeIn(low_text), FadeIn(high_value), FadeIn(high_text))
+        self.play(FadeIn(mid), FadeIn(mid_text), FadeIn(mid_value))
 
         # move lo to mid+1 (5) because mid + i is too small
         self.play(FadeOut(mid))
-        self.play(ApplyMethod(lo.next_to, arr[5]['group'], DOWN))
+
+        new_low_value = self.replace_value_animation(low_value, "5")
+        self.play(ApplyMethod(lo.next_to, arr[5]['group'], DOWN), FadeOut(low_value), FadeIn(new_low_value))
+        low_value = new_low_value
         
         # show mid at index 6
         mid.next_to(arr[6]['group'], DOWN)
@@ -238,6 +230,15 @@ class BinarySearch(Scene):
         self.play(FadeIn(mid))
 
         # TODO add the text for binary sum variables
+
+    # given an old text value object, create a new text object with the new text value
+    # plays an animation with the new value appearing and the old value fading, and then
+    # returns an instance to the new text object
+    def replace_value_animation(self, text_object, val):
+        new_object = TextMobject(val)
+        new_object.set_x(text_object.get_x()).set_y(text_object.get_y())
+        # self.play(FadeIn(new_object), FadeOut(text_object))
+        return new_object
 
 class BruteForce(Scene):
     def construct(self):
