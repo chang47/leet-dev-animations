@@ -197,6 +197,13 @@ class BinarySearch(Scene):
         self.play(FadeIn(text_group))
         self.play(FadeIn(value_group))
 
+        # TODO write a function that will set the position and probably return a new object for us to continue replacing
+        new_value = TextMobject("5")
+        new_value.set_x(low_value.get_x()).set_y(low_value.get_y())
+
+        self.play(FadeIn(new_value), FadeOut(low_value))
+        # self.play(ReplacementTransform(new_value, low_value))
+
         arrow = Arrow(DOWN, UP)
         arrow.scale(0.5)
         arrow.next_to(arr[0]['group'], DOWN)
