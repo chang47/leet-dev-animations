@@ -217,17 +217,25 @@ class BinarySearch(Scene):
         self.play(ApplyMethod(lo.next_to, arr[5]['group'], DOWN), FadeOut(low_value), FadeIn(new_low_value))
         low_value = new_low_value
         
+        # mid.next_to(arr[6]['group'], DOWN)
+        
         # show mid at index 6
+        new_value = self.replace_value_animation(mid_value, "6")
         mid.next_to(arr[6]['group'], DOWN)
-        self.play(FadeIn(mid))
+        self.play(FadeIn(mid), FadeOut(mid_value), FadeIn(new_value))
+        mid_value = new_value
 
         # move hi to mid-1 (5) because mid + i is too big
-        self.play(FadeOut(mid))
-        self.play(ApplyMethod(hi.next_to, lo, DOWN))
+        self.play(FadeOut(mid))  
+        new_value = self.replace_value_animation(high_value, "5")
+        self.play(ApplyMethod(hi.next_to, lo, DOWN), FadeOut(high_value), FadeIn(new_value))
+        high_value = new_value
 
         # show mid at index 5
+        new_value = self.replace_value_animation(mid_value, "5")
         mid.next_to(hi, DOWN)
-        self.play(FadeIn(mid))
+        self.play(FadeIn(mid), FadeOut(mid_value), FadeIn(new_value))
+        mid_value = new_value
 
         # TODO add the text for binary sum variables
 
