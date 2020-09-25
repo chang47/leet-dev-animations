@@ -257,7 +257,6 @@ class TwoPointer(Scene):
         #15 regular O(N) scan
         arr = []
         array_object = Group()
-        prev = None
         for i in range(6):
             obj = {}
             value = TextMobject(str(i))
@@ -280,6 +279,31 @@ class TwoPointer(Scene):
         self.play(FadeIn(arrow))
 
         self.play(ApplyMethod(arrow.next_to, arr[5]['group'], DOWN, run_time=1))
+
+        self.play(FadeOut(arrow), FadeOut(array_object))
+
+        #16 show 2 pointer array 
+        arr = []
+        array_object = Group()
+        for i in range(8):
+            obj = {}
+            value = TextMobject(str(i))
+            square = Square().surround(value).set_width(1).set_height(1)
+            group = Group(value, square).shift(RIGHT * i)
+            obj['group'] = group
+            arr.append(obj)
+            array_object.add(group)
+        array_object.center()
+
+        left_arrow = Arrow(DOWN, UP)
+        left_arrow.scale(0.5)
+        left_arrow.next_to(arr[0]['group'], DOWN)
+
+        right_arrow = Arrow(DOWN, UP)
+        right_arrow.scale(0.5)
+        right_arrow.next_to(arr[7]['group'], DOWN)
+        
+        self.play(FadeIn(array_object), FadeIn(left_arrow), FadeIn(right_arrow))
 
 
 class BruteForce(Scene):
