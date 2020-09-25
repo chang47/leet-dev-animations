@@ -1,6 +1,6 @@
 from manim import *
 
-class Intro(Scene):
+class AlgorithmIntroduction(Scene):
     def construct(self):
         #1 show logo
         title = TextMobject("LeetDev.io", tex_to_color_map={"LeetDev": RED_C, ".io": WHITE}).scale(2)
