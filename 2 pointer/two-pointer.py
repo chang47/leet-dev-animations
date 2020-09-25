@@ -1,6 +1,6 @@
 from manim import *
 
-class TwoPointer(Scene):
+class Intro(Scene):
     def construct(self):
         #1 show logo
         title = TextMobject("LeetDev.io", tex_to_color_map={"LeetDev": RED_C, ".io": WHITE}).scale(2)
@@ -237,8 +237,6 @@ class BinarySearch(Scene):
         self.play(FadeIn(mid), FadeOut(mid_value), FadeIn(new_value))
         mid_value = new_value
 
-        # TODO add the text for binary sum variables
-
     # given an old text value object, create a new text object with the new text value
     # plays an animation with the new value appearing and the old value fading, and then
     # returns an instance to the new text object
@@ -247,6 +245,42 @@ class BinarySearch(Scene):
         new_object.set_x(text_object.get_x()).set_y(text_object.get_y())
         # self.play(FadeIn(new_object), FadeOut(text_object))
         return new_object
+
+class TwoPointer(Scene):
+    def construct(self):
+        #14 animation of O(N) > O(N Log N)
+        problem = Text("O(N) > O(N Log N)",).scale(2)
+
+        self.play(FadeIn(problem))
+        self.play(FadeOut(problem))
+
+        #15 regular O(N) scan
+        arr = []
+        array_object = Group()
+        prev = None
+        for i in range(6):
+            obj = {}
+            value = TextMobject(str(i))
+            square = Square().surround(value).set_width(1).set_height(1)
+            group = Group(value, square).shift(RIGHT * i)
+            obj['value'] = value
+            obj['square'] = square
+            obj['group'] = group
+            arr.append(obj)
+            array_object.add(group)
+
+        array_object.center()
+
+        self.play(FadeIn(array_object))
+
+        arrow = Arrow(DOWN, UP)
+        arrow.scale(0.5)
+        arrow.next_to(arr[0]['group'], DOWN)
+
+        self.play(FadeIn(arrow))
+
+        self.play(ApplyMethod(arrow.next_to, arr[5]['group'], DOWN, run_time=1))
+
 
 class BruteForce(Scene):
     def construct(self):
