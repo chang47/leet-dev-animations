@@ -217,8 +217,6 @@ class BinarySearch(Scene):
         self.play(ApplyMethod(lo.next_to, arr[5]['group'], DOWN), FadeOut(low_value), FadeIn(new_low_value))
         low_value = new_low_value
         
-        # mid.next_to(arr[6]['group'], DOWN)
-        
         # show mid at index 6
         new_value = self.replace_value_animation(mid_value, "6")
         mid.next_to(arr[6]['group'], DOWN)
@@ -285,25 +283,74 @@ class TwoPointer(Scene):
         #16 show 2 pointer array 
         arr = []
         array_object = Group()
-        for i in range(8):
+        i = 0
+        for val in [1,3,5,6,7]:
             obj = {}
-            value = TextMobject(str(i))
+            value = TextMobject(str(val))
             square = Square().surround(value).set_width(1).set_height(1)
             group = Group(value, square).shift(RIGHT * i)
             obj['group'] = group
             arr.append(obj)
             array_object.add(group)
+            i+=1
+
         array_object.center()
 
-        left_arrow = Arrow(DOWN, UP)
-        left_arrow.scale(0.5)
-        left_arrow.next_to(arr[0]['group'], DOWN)
+        left = Text("L")
+        left.next_to(arr[0]['group'], DOWN)
 
-        right_arrow = Arrow(DOWN, UP)
-        right_arrow.scale(0.5)
-        right_arrow.next_to(arr[7]['group'], DOWN)
+        right = Text("R")
+        right.next_to(arr[4]['group'], DOWN)
         
-        self.play(FadeIn(array_object), FadeIn(left_arrow), FadeIn(right_arrow))
+        self.play(FadeIn(array_object), FadeIn(left), FadeIn(right))
+
+        #17 Animation
+        # 1 3 5 6 7 Target: 9
+        target_text = TextMobject("Target:")
+        sum_text = TextMobject("Sum:")
+        l_text = TextMobject("L:")
+        r_text = TextMobject("R:")
+        text_group = VGroup()
+        text_group.add(target_text)
+        text_group.add(sum_text)
+        text_group.add(l_text)
+        text_group.add(r_text)
+        text_group.to_corner(corner=UP+LEFT)
+        text_group.arrange(DOWN, center=False, aligned_edge=LEFT)
+        
+        # Setup variable value
+        target_value = TextMobject("9")
+        sum_value = TextMobject("8")
+        l_value = TextMobject("1")
+        r_value = TextMobject("7")
+        value_group = VGroup()
+        value_group.add(target_value)
+        value_group.add(sum_value)
+        value_group.add(l_value)
+        value_group.add(r_value)
+        value_group.arrange(DOWN, center=False, aligned_edge=LEFT)
+        value_group.next_to(text_group, RIGHT*2)
+
+        self.play(FadeIn(text_group), FadeIn(value_group))
+
+        left_value = self.moveArrowAndChangeText(l_value, "3", left, arr, 1) # l -> 3
+        sum_value = self.changeSum(sum_value, "10")
+        right_value = self.moveArrowAndChangeText(r_value, "6", right, arr, 3) # r -> 6
+        sum_value = self.changeSum(sum_value, "9")
+
+
+    def moveArrowAndChangeText(self, text_object, new_value, position_object, arr, new_index):
+        new_object = TextMobject(new_value)
+        new_object.set_x(text_object.get_x()).set_y(text_object.get_y())
+        self.play(ApplyMethod(position_object.next_to, arr[new_index]['group'], DOWN))
+        self.play(FadeOut(text_object), FadeIn(new_object))
+        return new_object
+
+    def changeSum(self, text_object, new_value):
+        new_object = TextMobject(new_value)
+        new_object.set_x(text_object.get_x()).set_y(text_object.get_y())
+        self.play(FadeOut(text_object), FadeIn(new_object))
+        return new_object
 
 
 class BruteForce(Scene):
