@@ -390,24 +390,30 @@ class CodeWalkthrough(Scene):
         code.scale(0.5)
         code.center()
         code.to_edge(LEFT)
+        code.shift(RIGHT*2)
 
         self.play(FadeIn(code))
 
-        arrow = Arrow(RIGHT, LEFT)
+        arrow = Arrow(LEFT, RIGHT)
         arrow.scale(0.5)
-        arrow.next_to(line1)
+        arrow.next_to(line1, LEFT)
         self.play(FadeIn(arrow))
-        const = 0.35
-        self.play(ApplyMethod(arrow.shift, DOWN*const))
-        self.play(ApplyMethod(arrow.shift, DOWN*const))
-        self.play(ApplyMethod(arrow.shift, DOWN*const))
-        self.play(ApplyMethod(arrow.shift, DOWN*const))
-        self.play(ApplyMethod(arrow.shift, DOWN*const))
-        self.play(ApplyMethod(arrow.shift, DOWN*const))
-        self.play(ApplyMethod(arrow.shift, DOWN*const))
-        self.play(ApplyMethod(arrow.shift, DOWN*const))
-        self.play(ApplyMethod(arrow.shift, DOWN*const))
-        self.play(ApplyMethod(arrow.shift, DOWN*const))
+        self.play(ApplyMethod(arrow.next_to, line2, LEFT))
+        self.play(ApplyMethod(arrow.next_to, line3, LEFT))
+        self.play(ApplyMethod(arrow.next_to, line4, LEFT))
+        self.play(ApplyMethod(arrow.next_to, line5, LEFT))
+        
+        # const = 0.35
+        # self.play(ApplyMethod(arrow.shift, DOWN*const))
+        # self.play(ApplyMethod(arrow.shift, DOWN*const))
+        # self.play(ApplyMethod(arrow.shift, DOWN*const))
+        # self.play(ApplyMethod(arrow.shift, DOWN*const))
+        # self.play(ApplyMethod(arrow.shift, DOWN*const))
+        # self.play(ApplyMethod(arrow.shift, DOWN*const))
+        # self.play(ApplyMethod(arrow.shift, DOWN*const))
+        # self.play(ApplyMethod(arrow.shift, DOWN*const))
+        # self.play(ApplyMethod(arrow.shift, DOWN*const))
+        # self.play(ApplyMethod(arrow.shift, DOWN*const))
 
 
 class BruteForce(Scene):
