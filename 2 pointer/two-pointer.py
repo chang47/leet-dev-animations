@@ -352,6 +352,63 @@ class TwoPointer(Scene):
         self.play(FadeOut(text_object), FadeIn(new_object))
         return new_object
 
+class CodeWalkthrough(Scene):
+    def construct(self):
+        line1 = Text("public boolean twoSum(int[] nums, int target) {")
+        line2 = Text("\tint left = 0;")
+        line3 = Text("\tint right = nums.length - 1;")
+        line4 = Text("\twhile (left < right) {")
+        line5 = Text("\t\tint sum = nums[left] + nums[right];")
+        line6 = Text("\t\tif (sum == target) {")
+        line7 = Text("\t\t\treturn new int[]{left+1,right+1};")
+        line8 = Text("\t\t} else if (sum <= target) {")
+        line9 = Text("\t\t\tleft++;")
+        line10 = Text("\t\t} else {")
+        line11 = Text("\t\t\tright--;")
+        line12 = Text("\t\t}")
+        line13 = Text("\t}")
+        line14 = Text("\treturn new int[2];")
+        line15 = Text("}")
+        
+        code = VGroup()
+        code.add(line1)
+        code.add(line2)
+        code.add(line3)
+        code.add(line4)
+        code.add(line5)
+        code.add(line6)
+        code.add(line7)
+        code.add(line8)
+        code.add(line9)
+        code.add(line10)
+        code.add(line11)
+        code.add(line12)
+        code.add(line13)
+        code.add(line14)
+        code.add(line15)
+        code.arrange(DOWN, center=False, aligned_edge=LEFT)
+        code.scale(0.5)
+        code.center()
+        code.to_edge(LEFT)
+
+        self.play(FadeIn(code))
+
+        arrow = Arrow(RIGHT, LEFT)
+        arrow.scale(0.5)
+        arrow.next_to(line1)
+        self.play(FadeIn(arrow))
+        const = 0.35
+        self.play(ApplyMethod(arrow.shift, DOWN*const))
+        self.play(ApplyMethod(arrow.shift, DOWN*const))
+        self.play(ApplyMethod(arrow.shift, DOWN*const))
+        self.play(ApplyMethod(arrow.shift, DOWN*const))
+        self.play(ApplyMethod(arrow.shift, DOWN*const))
+        self.play(ApplyMethod(arrow.shift, DOWN*const))
+        self.play(ApplyMethod(arrow.shift, DOWN*const))
+        self.play(ApplyMethod(arrow.shift, DOWN*const))
+        self.play(ApplyMethod(arrow.shift, DOWN*const))
+        self.play(ApplyMethod(arrow.shift, DOWN*const))
+
 
 class BruteForce(Scene):
     def construct(self):
@@ -387,6 +444,5 @@ class BruteForce(Scene):
                 self.play(Write(total, run_time=.5))
                 self.wait(.5)
                 self.play(FadeOut(total))
-
 
             self.play(FadeOut(hi_ptr))
