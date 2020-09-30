@@ -390,31 +390,41 @@ class CodeWalkthrough(Scene):
         code.scale(0.5)
         code.center()
         code.to_edge(LEFT)
-        code.shift(RIGHT*2)
+        code.shift(RIGHT)
 
+        # show the code
         self.play(FadeIn(code))
 
+        # show the arrow
         arrow = Arrow(LEFT, RIGHT)
         arrow.scale(0.5)
         arrow.next_to(line1, LEFT)
         self.play(FadeIn(arrow))
+
+        # Show the array
+        arr = []
+        array_object = Group()
+        for i in range(6):
+            obj = {}
+            value = TextMobject(str(i))
+            square = Square().surround(value).set_width(1).set_height(1)
+            group = Group(value, square).shift(RIGHT * i)
+            obj['value'] = value
+            obj['square'] = square
+            obj['group'] = group
+            arr.append(obj)
+            array_object.add(group)
+
+        array_object.scale(0.75)
+        array_object.to_corner(RIGHT+UP)
+
+        self.play(FadeIn(array_object))
+
+
         self.play(ApplyMethod(arrow.next_to, line2, LEFT))
         self.play(ApplyMethod(arrow.next_to, line3, LEFT))
         self.play(ApplyMethod(arrow.next_to, line4, LEFT))
         self.play(ApplyMethod(arrow.next_to, line5, LEFT))
-        
-        # const = 0.35
-        # self.play(ApplyMethod(arrow.shift, DOWN*const))
-        # self.play(ApplyMethod(arrow.shift, DOWN*const))
-        # self.play(ApplyMethod(arrow.shift, DOWN*const))
-        # self.play(ApplyMethod(arrow.shift, DOWN*const))
-        # self.play(ApplyMethod(arrow.shift, DOWN*const))
-        # self.play(ApplyMethod(arrow.shift, DOWN*const))
-        # self.play(ApplyMethod(arrow.shift, DOWN*const))
-        # self.play(ApplyMethod(arrow.shift, DOWN*const))
-        # self.play(ApplyMethod(arrow.shift, DOWN*const))
-        # self.play(ApplyMethod(arrow.shift, DOWN*const))
-
 
 class BruteForce(Scene):
     def construct(self):
