@@ -333,11 +333,10 @@ class TwoPointer(Scene):
 
         self.play(FadeIn(text_group), FadeIn(value_group))
 
-        left_value = self.moveArrowAndChangeText(l_value, "3", left, arr, 1) # l -> 3
+        l_value = self.moveArrowAndChangeText(l_value, "3", left, arr, 1) # l -> 3
         sum_value = self.changeSum(sum_value, "10")
-        right_value = self.moveArrowAndChangeText(r_value, "6", right, arr, 3) # r -> 6
+        r_value = self.moveArrowAndChangeText(r_value, "6", right, arr, 3) # r -> 6
         sum_value = self.changeSum(sum_value, "9")
-
 
     def moveArrowAndChangeText(self, text_object, new_value, position_object, arr, new_index):
         new_object = TextMobject(new_value)
@@ -395,36 +394,101 @@ class CodeWalkthrough(Scene):
         # show the code
         self.play(FadeIn(code))
 
-        # show the arrow
-        arrow = Arrow(LEFT, RIGHT)
-        arrow.scale(0.5)
-        arrow.next_to(line1, LEFT)
-        self.play(FadeIn(arrow))
-
-        # Show the array
+        # Show the array on the top right corner
         arr = []
         array_object = Group()
-        for i in range(6):
+        i = 0
+        for val in [1,3,5,6,7]:
             obj = {}
-            value = TextMobject(str(i))
+            value = TextMobject(str(val))
             square = Square().surround(value).set_width(1).set_height(1)
             group = Group(value, square).shift(RIGHT * i)
-            obj['value'] = value
-            obj['square'] = square
             obj['group'] = group
             arr.append(obj)
             array_object.add(group)
+            i+=1
 
         array_object.scale(0.75)
         array_object.to_corner(RIGHT+UP)
 
         self.play(FadeIn(array_object))
 
-
+        array_variable_text = Text("nums:")
+        array_variable_text.next_to(array_object, LEFT)
+        self.play(FadeIn(array_variable_text))
+        
+        target_text = Text("target:")
+        target_value = Text("9")
+        target_text.next_to(array_variable_text, DOWN*3)
+        target_value.next_to(target_text, RIGHT)
+        self.play(FadeIn(target_text), FadeIn(target_value))
+        
+        # show the arrow
+        arrow = Arrow(LEFT, RIGHT)
+        arrow.scale(0.5)
+        arrow.next_to(line1, LEFT)
+        self.play(FadeIn(arrow))
+        
         self.play(ApplyMethod(arrow.next_to, line2, LEFT))
+
+        left_text = Text("left:  ")
+        left_value = Text("0")
+        left_text.next_to(target_text, DOWN)
+        left_value.next_to(left_text, RIGHT)
+        self.play(FadeIn(left_text), FadeIn(left_value))
+
         self.play(ApplyMethod(arrow.next_to, line3, LEFT))
+
+        right_text = Text("right: ")
+        right_value = Text("4")
+        right_text.next_to(left_text, DOWN)
+        right_value.next_to(right_text, RIGHT)
+        self.play(FadeIn(right_text), FadeIn(right_value))
+
+        self.play(ApplyMethod(arrow.next_to, line3, LEFT))
+
         self.play(ApplyMethod(arrow.next_to, line4, LEFT))
         self.play(ApplyMethod(arrow.next_to, line5, LEFT))
+
+        sum_text = Text("sum: ")
+        sum_value = Text("8")
+        sum_text.next_to(right_text, DOWN)
+        sum_value.next_to(sum_text, RIGHT)
+        self.play(FadeIn(sum_text), FadeIn(sum_value))
+
+        self.play(ApplyMethod(arrow.next_to, line6, LEFT))
+        self.jumpArrow(arrow, line8)
+        self.play(ApplyMethod(arrow.next_to, line9, LEFT))
+        left_value = self.changeText(left_text, "1", left_value)
+        
+        self.jumpArrow(arrow, line4)
+        self.play(ApplyMethod(arrow.next_to, line5, LEFT))
+        sum_value = self.changeText(sum_text, "10", sum_value)
+
+        self.play(ApplyMethod(arrow.next_to, line6, LEFT))
+        self.jumpArrow(arrow, line8)
+        self.jumpArrow(arrow, line10)
+        self.play(ApplyMethod(arrow.next_to, line11, LEFT))
+        right_value = self.changeText(right_text, "3", right_value)
+
+        self.jumpArrow(arrow, line4)
+        self.play(ApplyMethod(arrow.next_to, line5, LEFT))
+        sum_value = self.changeText(sum_text, "9", sum_value)
+        
+        self.play(ApplyMethod(arrow.next_to, line6, LEFT))
+        self.play(ApplyMethod(arrow.next_to, line7, LEFT))
+    
+    def changeText(self, text_object, new_value, value_object):
+        new_object = TextMobject(new_value)
+        new_object.next_to(text_object, RIGHT)
+        self.play(FadeOut(value_object), FadeIn(new_object))
+        return new_object
+
+    def jumpArrow(self, arrow, line):
+        self.play(FadeOut(arrow, run_time=.5))
+        arrow.next_to(line, LEFT)
+        self.play(FadeIn(arrow, run_time=.5))
+
 
 class BruteForce(Scene):
     def construct(self):
