@@ -353,6 +353,7 @@ class TwoPointer(Scene):
 
 class CodeWalkthrough(Scene):
     def construct(self):
+        #18 - 21: Note we're still missing the portion of the code where we just walk through the code
         line1 = Text("public boolean twoSum(int[] nums, int target) {")
         line2 = Text("\tint left = 0;")
         line3 = Text("\tint right = nums.length - 1;")
@@ -477,6 +478,11 @@ class CodeWalkthrough(Scene):
         
         self.play(ApplyMethod(arrow.next_to, line6, LEFT))
         self.play(ApplyMethod(arrow.next_to, line7, LEFT))
+
+        # Make everything disapear
+        self.play(FadeOut(arrow), FadeOut(code), FadeOut(sum_text), FadeOut(sum_value), FadeOut(right_text),
+                  FadeOut(right_value), FadeOut(left_text), FadeOut(left_value), FadeOut(array_variable_text), 
+                  FadeOut(array_object), FadeOut(target_text), FadeOut(target_value))
     
     def changeText(self, text_object, new_value, value_object):
         new_object = TextMobject(new_value)
@@ -488,6 +494,52 @@ class CodeWalkthrough(Scene):
         self.play(FadeOut(arrow, run_time=.5))
         arrow.next_to(line, LEFT)
         self.play(FadeIn(arrow, run_time=.5))
+
+
+class EdgeCases(Scene):
+    def construct(self):
+        # 22 Show aniamtion of list edge cases
+        problem = Text("Edge Cases", color=WHITE).scale(2)
+        problem.generate_target()
+        problem.target.to_corner(UP+LEFT)
+        problem.target.scale(0.65)
+
+        # Maybe just move it to the top left corner instead of fading away
+        self.play(FadeIn(problem))
+        self.wait(1)
+        self.play(MoveToTarget(problem, run_time=2))
+        
+        first = TextMobject("Questions to ask:").scale(1.5)
+        rec = VGroup(first)
+        rec.move_to(UP*2 + LEFT*2)
+
+        second = TextMobject("* What if there's no solutions?").scale(1.25)
+        third = TextMobject("* What if there's negative numbers?").scale(1.25)
+        four = TextMobject("* What if there are duplicates?").scale(1.25)
+        five = TextMobject("* What if the array wasn't sorted?").scale(1.25)
+
+        # https://www.reddit.com/r/manim/comments/iupbe8/how_to_left_align_textmobject/
+        self.play(Write(rec, run_time=0.75))
+        self.wait(1.5)
+        rec.add(second)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(second, run_time=0.75))
+        self.wait(1.5)
+        rec.add(third)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(third, run_time=0.75))
+        self.wait(1.5)
+        rec.add(four)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(four, run_time=0.75))
+        self.wait(1.5)
+        rec.add(five)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(five, run_time=0.75))
+        self.wait(1.5)
+
+        # Fade out the rectangle holding all the text 
+        self.play(FadeOut(rec), FadeOut(problem))
 
 
 class BruteForce(Scene):
