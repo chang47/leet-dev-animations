@@ -68,7 +68,7 @@ class Six(Scene):
 
 class Seven(Scene):
     def construct(self):
-        first = Text("Given an array of integers and a target integer", color=WHITE)
+        first = Text("Given an array of sorted integers and a target integer", color=WHITE)
         second = Text("return indices of two numbers such that they add up to target.", color=WHITE)
         second.next_to(first, DOWN)
 
@@ -540,6 +540,24 @@ class EdgeCases(Scene):
 
         # Fade out the rectangle holding all the text 
         self.play(FadeOut(rec), FadeOut(problem))
+
+class IdentifyProblem(Scene):
+    def construct(self):
+        # 23 Show animation of the new section
+        problem = Text("Identifying Problem", color=WHITE).scale(2)
+        problem.generate_target()
+        problem.target.to_corner(UP+LEFT)
+        problem.target.scale(0.65)
+
+        # Maybe just move it to the top left corner instead of fading away
+        self.play(FadeIn(problem))
+        self.wait(1)
+        self.play(MoveToTarget(problem, run_time=2))
+
+        identify = Text("Find a pair of numbers in an array", color=WHITE).scale(1.5)
+        self.play(FadeIn(identify))
+
+        
 
 
 class BruteForce(Scene):
