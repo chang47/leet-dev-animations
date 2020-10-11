@@ -5,10 +5,14 @@ class AlgorithmIntroduction(Scene):
         #1 show logo
         title = TextMobject("LeetDev.io", tex_to_color_map={"LeetDev": RED_C, ".io": WHITE}).scale(2)
         self.play(GrowFromCenter(title))
+
+        self.wait(1)
         
         #2 show 2 pointer problem
         algorithm_text = TextMobject("2 Pointer Algorithm").scale(2)
         self.play(ReplacementTransform(title, algorithm_text))
+
+        self.wait(1)
 
         #3 show array
         arr = []
@@ -30,6 +34,8 @@ class AlgorithmIntroduction(Scene):
         # Do a better animation
         self.play(FadeOut(algorithm_text), FadeIn(array_object))
 
+        self.wait(1)
+
         #4 show forward and back pointer move
         front_arrow = Arrow(DOWN, UP)
         front_arrow.scale(0.5)
@@ -40,10 +46,15 @@ class AlgorithmIntroduction(Scene):
         back_arrow.next_to(arr[5]['group'], DOWN)
         arrow_runtime = 0.75
         self.play(FadeIn(front_arrow), FadeIn(back_arrow))
+
+        self.wait(1)
+
         self.play(ApplyMethod(front_arrow.next_to, arr[1]['group'], DOWN, run_time=arrow_runtime))
         self.play(ApplyMethod(back_arrow.next_to, arr[4]['group'], DOWN), run_time=arrow_runtime)
         self.play(ApplyMethod(front_arrow.next_to, arr[2]['group'], DOWN), run_time=arrow_runtime)
         self.play(ApplyMethod(back_arrow.next_to, arr[3]['group'], DOWN), run_time=arrow_runtime)
+
+        self.wait(1)
 
         #5 slow pointer and faster pointer move   
         self.play(ApplyMethod(front_arrow.next_to, arr[0]['group'], DOWN, run_time=arrow_runtime), ApplyMethod(back_arrow.next_to, arr[0]['group'], DOWN, run_time=arrow_runtime))
@@ -77,36 +88,37 @@ class Seven(Scene):
         
 class HighLevel(Scene):
     def construct(self):
-        # 8 Show the problem introduction Text
-        problem = Text("Problem Introduction", color=WHITE).scale(2)
+        # 8 Show the High Level Algorithm Text
+        problem = Text("High Level Algorithm", color=WHITE).scale(2)
 
         self.play(FadeIn(problem))
         self.play(FadeOut(problem))
+
+        self.wait(1)
         
         # 9 Show questions to ask
         first = TextMobject("Questions to ask:").scale(2)
         rec = VGroup(first)
         rec.move_to(UP*2 + LEFT*2)
 
-        second = TextMobject("* Is the array sorted?").scale(1.25)
         third = TextMobject("* What does my input look like?").scale(1.25)
         four = TextMobject("* Will the sum cause integer overflow?").scale(1.25)
         five = TextMobject("* Is there guaranteed to be an answer?").scale(1.25)
 
         # https://www.reddit.com/r/manim/comments/iupbe8/how_to_left_align_textmobject/
         self.play(Write(rec, run_time=0.75))
-        rec.add(second)
-        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
-        self.play(Write(second, run_time=0.75))
         rec.add(third)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
         self.play(Write(third, run_time=0.75))
+        self.wait(1)
         rec.add(four)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
         self.play(Write(four, run_time=0.75))
+        self.wait(1)
         rec.add(five)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
         self.play(Write(five, run_time=0.75))
+        self.wait(1)
 
         # Fade out the rectangle holding all the text 
         self.play(FadeOut(rec))
