@@ -3,11 +3,11 @@ from manim import *
 class AlgorithmIntroduction(Scene):
     def construct(self):
         #1 show logo
+        self.wait(2)
         title = TextMobject("LeetDev.io", tex_to_color_map={"LeetDev": RED_C, ".io": WHITE}).scale(2)
-        self.play(GrowFromCenter(title))
+        self.play(GrowFromCenter(title), run_time=1)
+        self.wait(5)
 
-        self.wait(1)
-        
         #2 show 2 pointer problem
         algorithm_text = TextMobject("2 Pointer Algorithm").scale(2)
         self.play(ReplacementTransform(title, algorithm_text))
@@ -56,9 +56,9 @@ class AlgorithmIntroduction(Scene):
 
         self.wait(1)
 
-        #5 slow pointer and faster pointer move   
+        #5 slow pointer and faster pointer move
         self.play(ApplyMethod(front_arrow.next_to, arr[0]['group'], DOWN, run_time=arrow_runtime), ApplyMethod(back_arrow.next_to, arr[0]['group'], DOWN, run_time=arrow_runtime))
-        
+
         self.play(ApplyMethod(front_arrow.next_to, arr[1]['group'], DOWN, run_time=arrow_runtime))
         self.play(ApplyMethod(front_arrow.next_to, arr[2]['group'], DOWN, run_time=arrow_runtime))
         self.play(ApplyMethod(front_arrow.next_to, arr[3]['group'], DOWN, run_time=arrow_runtime))
@@ -79,22 +79,22 @@ class Six(Scene):
 
 class Seven(Scene):
     def construct(self):
-        first = Text("Given an array of sorted integers and a target integer", color=WHITE)
-        second = Text("return indices of two numbers such that they add up to target.", color=WHITE)
+        first = Text("Given an array of sorted integers, find two numbers", color=WHITE)
+        second = Text("such that they add up to a target number.", color=WHITE)
         second.next_to(first, DOWN)
 
-        self.play(Write(first, run_time=1))
-        self.play(Write(second, run_time=1))
+        self.play(Write(first, run_time=2))
+        self.play(Write(second, run_time=2))
         
 class HighLevel(Scene):
     def construct(self):
         # 8 Show the High Level Algorithm Text
         problem = Text("High Level Algorithm", color=WHITE).scale(2)
 
-        self.play(FadeIn(problem))
+        self.play(FadeIn(problem, run_time=3))
         self.play(FadeOut(problem))
 
-        self.wait(1)
+        self.wait(2)
         
         # 9 Show questions to ask
         first = TextMobject("Questions to ask:").scale(2)
@@ -106,57 +106,57 @@ class HighLevel(Scene):
         five = TextMobject("* Is there guaranteed to be an answer?").scale(1.25)
 
         # https://www.reddit.com/r/manim/comments/iupbe8/how_to_left_align_textmobject/
-        self.play(Write(rec, run_time=0.75))
+        self.play(Write(rec, run_time=2))
         rec.add(third)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
-        self.play(Write(third, run_time=0.75))
+        self.play(Write(third, run_time=2))
         self.wait(1)
         rec.add(four)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
-        self.play(Write(four, run_time=0.75))
+        self.play(Write(four, run_time=2))
         self.wait(1)
         rec.add(five)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
-        self.play(Write(five, run_time=0.75))
+        self.play(Write(five, run_time=2))
         self.wait(1)
 
         # Fade out the rectangle holding all the text 
         self.play(FadeOut(rec))
 
-        #10 N^2 array
-        arr = []
-        array_object = Group()
-        prev = None
-        for i in range(6):
-            obj = {}
-            value = TextMobject(str(i))
-            square = Square().surround(value).set_width(1).set_height(1)
-            group = Group(value, square).shift(RIGHT * i)
-            obj['value'] = value
-            obj['square'] = square
-            obj['group'] = group
-            arr.append(obj)
-            array_object.add(group)
-
-        array_object.center()
-
-        self.play(FadeIn(array_object))
-
-        arrow1 = Arrow(DOWN, UP)
-        arrow1.scale(0.5)
-        arrow1.next_to(arr[0]['group'], DOWN)
-
-        arrow2 = Arrow(DOWN, UP)
-        arrow2.scale(0.5)
-        arrow2.next_to(arr[0]['group'], DOWN)
-
-        self.play(FadeIn(arrow1), FadeIn(arrow2))
-        arrow_runtime=1
-        for i in range(6):
-            # Move both indexes together
-            self.play(ApplyMethod(arrow1.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime), ApplyMethod(arrow2.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime))
-            for j in range(i, 6):
-                self.play(ApplyMethod(arrow2.next_to, arr[j]['group'], DOWN, run_time=arrow_runtime))
+        # #10 N^2 array
+        # arr = []
+        # array_object = Group()
+        # prev = None
+        # for i in range(6):
+        #     obj = {}
+        #     value = TextMobject(str(i))
+        #     square = Square().surround(value).set_width(1).set_height(1)
+        #     group = Group(value, square).shift(RIGHT * i)
+        #     obj['value'] = value
+        #     obj['square'] = square
+        #     obj['group'] = group
+        #     arr.append(obj)
+        #     array_object.add(group)
+        #
+        # array_object.center()
+        #
+        # self.play(FadeIn(array_object))
+        #
+        # arrow1 = Arrow(DOWN, UP)
+        # arrow1.scale(0.5)
+        # arrow1.next_to(arr[0]['group'], DOWN)
+        #
+        # arrow2 = Arrow(DOWN, UP)
+        # arrow2.scale(0.5)
+        # arrow2.next_to(arr[0]['group'], DOWN)
+        #
+        # self.play(FadeIn(arrow1), FadeIn(arrow2))
+        # arrow_runtime=1
+        # for i in range(6):
+        #     # Move both indexes together
+        #     self.play(ApplyMethod(arrow1.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime), ApplyMethod(arrow2.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime))
+        #     for j in range(i, 6):
+        #         self.play(ApplyMethod(arrow2.next_to, arr[j]['group'], DOWN, run_time=arrow_runtime))
     
 class BinarySearch(Scene):
     def construct(self):
@@ -569,8 +569,51 @@ class IdentifyProblem(Scene):
         identify = Text("Find a pair of numbers in an array", color=WHITE).scale(1.5)
         self.play(FadeIn(identify))
 
-        
 
+class Smart(Scene):
+    def construct(self):
+        nums = []
+        nums_group = Group()
+        i = 0
+        for num in [2,4,5,7,11,15]:
+            value = TextMobject(str(num))
+            square = Square().surround(value).set_width(1).set_height(1)
+            group = Group(value, square)
+            nums_group.add(group.shift(RIGHT * i))
+            nums.append({
+                'group': group,
+                'num': num
+            })
+            i += 1
+
+        nums_group.set_x(0)
+        nums_group.set_y(0)
+        self.play(FadeIn(nums_group))
+
+        lo_ptr = Arrow(DOWN, UP).scale(0.5).next_to(nums[0]['group'], DOWN)
+        lo_group = Group(TextMobject("front").scale(0.75).next_to(lo_ptr, DOWN), lo_ptr)
+
+        hi_ptr = Arrow(DOWN, UP, color=BLUE).scale(0.5).next_to(nums[5]['group'], DOWN)
+        hi_group = Group(TextMobject("back", color=BLUE).scale(0.75).next_to(hi_ptr, DOWN), hi_ptr)
+
+        total = TextMobject(f"sum = {nums[0]['num'] + nums[5]['num']}").next_to(nums_group, UP)
+        self.play(FadeIn(lo_group), FadeIn(hi_group), FadeIn(total))
+
+        lo = 0
+        hi = 5
+        i = 0
+        while lo + 1 < hi:
+            if i % 2 == 0:
+                lo = lo+1
+                total_new = TextMobject(f"sum = {nums[lo]['num'] + nums[hi]['num']}").next_to(nums_group, UP)
+                self.play(ApplyMethod(lo_group.next_to, nums[lo]['group'], DOWN), Transform(total, total_new))
+            else:
+                hi = hi-1
+                total_new = TextMobject(f"sum = {nums[lo]['num'] + nums[hi]['num']}").next_to(nums_group, UP)
+                self.play(ApplyMethod(hi_group.next_to, nums[hi]['group'], DOWN), Transform(total, total_new))
+
+            self.wait(1)
+            i += 1
 
 class BruteForce(Scene):
     def construct(self):
@@ -588,23 +631,25 @@ class BruteForce(Scene):
             })
             i+=1
 
-        nums_group.set_x(-3)
-        nums_group.set_y(2)
+        nums_group.set_x(0)
+        nums_group.set_y(0)
         self.play(FadeIn(nums_group))
 
         lo_ptr = Arrow(DOWN, UP).scale(0.5).next_to(nums[0]['group'], DOWN)
-        
+        lo_group = Group(TextMobject("slow").scale(0.75).next_to(lo_ptr, DOWN), lo_ptr)
+
         for lo in range(3):
-            
-            self.play(ApplyMethod(lo_ptr.next_to, nums[lo]['group'], DOWN))
+            self.play(ApplyMethod(lo_group.next_to, nums[lo]['group'], DOWN))
+
             hi_ptr = Arrow(DOWN, UP, color=BLUE).scale(0.5).next_to(nums[lo]['group'], DOWN)
+            hi_group = Group(TextMobject("fast", color=BLUE).scale(0.75).next_to(hi_ptr, DOWN), hi_ptr)
 
             for hi in range(lo + 1, 4):
-                self.play(ApplyMethod(hi_ptr.next_to, nums[hi]['group'], DOWN))
+                self.play(ApplyMethod(hi_group.next_to, nums[hi]['group'], DOWN))
                 total = TextMobject(f"sum = {nums[lo]['num'] + nums[hi]['num']}")
                 total.next_to(nums_group, UP)
-                self.play(Write(total, run_time=.5))
+                self.play(Write(total))
                 self.wait(.5)
                 self.play(FadeOut(total))
 
-            self.play(FadeOut(hi_ptr))
+            self.play(FadeOut(hi_group))
