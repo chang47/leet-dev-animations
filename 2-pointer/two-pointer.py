@@ -190,7 +190,7 @@ class FindBetterAnswer(Scene):
 
 class NLogNText(Scene):
     def construct(self):
-        problem = Text("O(N Log N) > O(N²)",).scale(2)
+        problem = Text("O(N Log N) > O(N²)",).scale(1.3)
 
         self.play(FadeIn(problem))
         self.wait(7)
