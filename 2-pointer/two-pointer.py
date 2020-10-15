@@ -103,60 +103,90 @@ class HighLevel(Scene):
 
         third = TextMobject("* What does my input look like?").scale(1.25)
         four = TextMobject("* Will the sum cause integer overflow?").scale(1.25)
-        five = TextMobject("* Is there guaranteed to be an answer?").scale(1.25)
+        # five = TextMobject("* Is there guaranteed to be an answer?").scale(1.25) # script forgot to say it
 
         # https://www.reddit.com/r/manim/comments/iupbe8/how_to_left_align_textmobject/
         self.play(Write(rec, run_time=2))
+        self.wait(2)
         rec.add(third)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
         self.play(Write(third, run_time=2))
-        self.wait(1)
         rec.add(four)
         rec.arrange(DOWN, center=False, aligned_edge=LEFT)
-        self.play(Write(four, run_time=2))
-        self.wait(1)
-        rec.add(five)
-        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
-        self.play(Write(five, run_time=2))
-        self.wait(1)
+        self.play(Write(four, run_time=3))
+        
+        # Forgot to include it in the script
+        # rec.add(five)
+        # rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        # self.play(Write(five, run_time=2))
+        # self.wait(1)
 
         # Fade out the rectangle holding all the text 
+        self.wait(2)
         self.play(FadeOut(rec))
 
         # #10 N^2 array
-        # arr = []
-        # array_object = Group()
-        # prev = None
-        # for i in range(6):
-        #     obj = {}
-        #     value = TextMobject(str(i))
-        #     square = Square().surround(value).set_width(1).set_height(1)
-        #     group = Group(value, square).shift(RIGHT * i)
-        #     obj['value'] = value
-        #     obj['square'] = square
-        #     obj['group'] = group
-        #     arr.append(obj)
-        #     array_object.add(group)
-        #
-        # array_object.center()
-        #
-        # self.play(FadeIn(array_object))
-        #
-        # arrow1 = Arrow(DOWN, UP)
-        # arrow1.scale(0.5)
-        # arrow1.next_to(arr[0]['group'], DOWN)
-        #
-        # arrow2 = Arrow(DOWN, UP)
-        # arrow2.scale(0.5)
-        # arrow2.next_to(arr[0]['group'], DOWN)
-        #
-        # self.play(FadeIn(arrow1), FadeIn(arrow2))
-        # arrow_runtime=1
-        # for i in range(6):
-        #     # Move both indexes together
-        #     self.play(ApplyMethod(arrow1.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime), ApplyMethod(arrow2.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime))
-        #     for j in range(i, 6):
-        #         self.play(ApplyMethod(arrow2.next_to, arr[j]['group'], DOWN, run_time=arrow_runtime))
+        arr = []
+        array_object = Group()
+        prev = None
+        for i in range(6):
+            obj = {}
+            value = TextMobject(str(i))
+            square = Square().surround(value).set_width(1).set_height(1)
+            group = Group(value, square).shift(RIGHT * i)
+            obj['value'] = value
+            obj['square'] = square
+            obj['group'] = group
+            arr.append(obj)
+            array_object.add(group)
+        
+        array_object.center()
+        
+        self.play(FadeIn(array_object))
+        
+        arrow1 = Arrow(DOWN, UP)
+        arrow1.scale(0.5)
+        arrow1.next_to(arr[0]['group'], DOWN)
+        
+        arrow2 = Arrow(DOWN, UP)
+        arrow2.scale(0.5)
+        arrow2.next_to(arr[0]['group'], DOWN)
+        
+        self.play(FadeIn(arrow1), FadeIn(arrow2))
+        arrow_runtime=0.8
+        for i in range(6):
+            # Move both indexes together
+            self.play(ApplyMethod(arrow1.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime), ApplyMethod(arrow2.next_to, arr[i]['group'], DOWN, run_time=arrow_runtime))
+            for j in range(i, 6):
+                self.play(ApplyMethod(arrow2.next_to, arr[j]['group'], DOWN, run_time=arrow_runtime))
+
+        self.play(FadeOut(array_object), FadeOut(arrow1), FadeOut(arrow2))
+
+class FindBetterAnswer(Scene):
+    def construct(self):
+        first = TextMobject("How to find better solutions:").scale(1.5)
+        rec = VGroup(first)
+        rec.move_to(UP*2 + LEFT*2)
+
+        third = TextMobject("* Find insights from simple solution or problem statement").scale(1)
+        four = TextMobject("* Ask for a hint").scale(1)
+        five = TextMobject("* Find algorithms based off of runtimes").scale(1)
+
+        # https://www.reddit.com/r/manim/comments/iupbe8/how_to_left_align_textmobject/
+        self.play(Write(rec, run_time=3))
+        rec.add(third)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(third, run_time=2))
+        self.wait(6)
+        rec.add(four)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(four, run_time=2))
+        self.wait(8)
+        rec.add(five)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(five, run_time=2))
+        self.wait(7)
+        self.play(FadeOut(rec))
     
 class BinarySearch(Scene):
     def construct(self):
