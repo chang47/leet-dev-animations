@@ -323,7 +323,7 @@ class BinarySearch(Scene):
         self.play(FadeIn(circle))
         self.wait(12)
         self.play(FadeOut(mid), FadeOut(sum_value), FadeOut(sum_text), FadeOut(target_text), FadeOut(target_value), FadeOut(index_text), 
-                    FadeOut(index_value), FadeOut(array_object), FadeOut(arrow), FadeOut(lo), FadeOut(hi), FadeOut(mid))
+                    FadeOut(index_value), FadeOut(array_object), FadeOut(arrow), FadeOut(lo), FadeOut(hi), FadeOut(mid), FadeOut(circle))
 
     # given an old text value object, create a new text object with the new text value
     # plays an animation with the new value appearing and the old value fading, and then
