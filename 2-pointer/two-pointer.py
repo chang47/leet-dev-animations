@@ -187,6 +187,34 @@ class FindBetterAnswer(Scene):
         self.play(Write(five, run_time=2))
         self.wait(7)
         self.play(FadeOut(rec))
+
+class NLogNText(Scene):
+    def construct(self):
+        problem = Text("O(N Log N) > O(N²)",).scale(2)
+
+        self.play(FadeIn(problem))
+        self.wait(7)
+        self.play(FadeOut(problem))
+
+        first = TextMobject("O(N Log N) Algo:").scale(1.5)
+        rec = VGroup(first)
+        rec.move_to(UP*2 + LEFT*2)
+
+        third = TextMobject("* Sort and scan").scale(1)
+        four = TextMobject("* Scan through array and use binary search").scale(1)
+
+        # https://www.reddit.com/r/manim/comments/iupbe8/how_to_left_align_textmobject/
+        self.play(Write(rec, run_time=2))
+        rec.add(third)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(third, run_time=2))
+        self.wait(5)
+        rec.add(four)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(four, run_time=2))
+        self.wait(20)
+        self.play(FadeOut(rec))
+        # Finsh around the 3:28 mark
     
 class BinarySearch(Scene):
     def construct(self):
@@ -207,39 +235,32 @@ class BinarySearch(Scene):
             array_object.add(group)
 
         array_object.center()
-        self.play(FadeIn(array_object))
+        self.play(FadeIn(array_object, run_time=2))
 
         # Setup variable text
-        index_text = TextMobject("index:")
-        low_text = TextMobject("lo:")
-        mid_text = TextMobject("mid:")
-        high_text = TextMobject("hi:")
-        text_group = VGroup()
-        text_group.add(index_text)
-        text_group.add(low_text)
-        text_group.add(high_text)
-        text_group.add(mid_text)
-        text_group.to_corner(corner=UP+LEFT)
-        text_group.arrange(DOWN, center=False, aligned_edge=LEFT)
+        index_text = Text("arr index:")
+        index_value = Text("0")
+        index_text.to_corner(corner=UP + LEFT)
+        index_value.next_to(index_text, RIGHT)
 
-        # Setup variable value
-        index_value = TextMobject("0")
-        low_value = TextMobject("1")
-        mid_value = TextMobject("4")
-        high_value = TextMobject("7")
-        value_group = VGroup()
-        value_group.add(index_value)
-        value_group.add(low_value)
-        value_group.add(high_value)
-        value_group.add(mid_value)
-        value_group.arrange(DOWN, center=False, aligned_edge=LEFT)
-        value_group.next_to(text_group, RIGHT*2)
+        target_text = Text("target:  ")
+        target_value = Text("5")
+        target_text.next_to(index_text, DOWN)
+        target_value.next_to(target_text, RIGHT)
+        
+        sum_text = Text("sum:   ")
+        sum_value = Text("0")
+        sum_text.next_to(target_text, DOWN)
+        sum_value.next_to(sum_text, RIGHT)
 
         arrow = Arrow(DOWN, UP)
         arrow.scale(0.5)
         arrow.next_to(arr[0]['group'], DOWN)
 
-        self.play(FadeIn(arrow), FadeIn(index_text), FadeIn(index_value)) 
+        self.wait(11)
+        self.play(FadeIn(arrow), FadeIn(index_text), FadeIn(index_value), FadeIn(target_value), FadeIn(target_text))
+        # 3:50
+        self.wait(2)
 
         lo = TextMobject("lo")
         lo.next_to(arr[1]['group'], DOWN)
@@ -248,41 +269,68 @@ class BinarySearch(Scene):
         hi = TextMobject("hi")
         hi.next_to(arr[7]['group'], DOWN)
 
-        # show lo,hi, and then show mid
-        self.play(FadeIn(lo), FadeIn(hi), FadeIn(low_value), FadeIn(low_text), FadeIn(high_value), FadeIn(high_text))
-        self.play(FadeIn(mid), FadeIn(mid_text), FadeIn(mid_value))
+        # show everything
+        self.play(FadeIn(lo), FadeIn(hi))
+        self.wait(2)
+        # 3:55
+        self.play(FadeIn(mid))
+        self.play(FadeIn(sum_text), FadeIn(sum_value))
+        self.wait(5)
+
+        # 4:02
+        new_sum_value = self.replace_value_animation(sum_value, "0 + 4 = 4", sum_text)
+        self.play(FadeOut(sum_value), FadeIn(new_sum_value))
+        sum_value = new_sum_value
+        self.wait(4)
+
+        # 4:06
 
         # move lo to mid+1 (5) because mid + i is too small
         self.play(FadeOut(mid))
-
-        new_low_value = self.replace_value_animation(low_value, "5")
-        self.play(ApplyMethod(lo.next_to, arr[5]['group'], DOWN), FadeOut(low_value), FadeIn(new_low_value))
-        low_value = new_low_value
+        self.play(ApplyMethod(lo.next_to, arr[5]['group'], DOWN))
         
         # show mid at index 6
-        new_value = self.replace_value_animation(mid_value, "6")
         mid.next_to(arr[6]['group'], DOWN)
-        self.play(FadeIn(mid), FadeOut(mid_value), FadeIn(new_value))
-        mid_value = new_value
+        self.play(FadeIn(mid))
+        self.wait(2)
+
+        # 4:11
+
+        new_value = self.replace_value_animation(sum_value, "0 + 6 = 6", sum_text)
+        self.play(FadeOut(sum_value), FadeIn(new_value))
+        sum_value = new_value
+        self.wait(2)
+
+        # 4:14
 
         # move hi to mid-1 (5) because mid + i is too big
-        self.play(FadeOut(mid))  
-        new_value = self.replace_value_animation(high_value, "5")
-        self.play(ApplyMethod(hi.next_to, lo, DOWN), FadeOut(high_value), FadeIn(new_value))
-        high_value = new_value
+        self.play(FadeOut(mid)) 
+        self.play(ApplyMethod(hi.next_to, lo, DOWN)) 
+        self.wait(1)
 
+        # 4:17
+        
         # show mid at index 5
-        new_value = self.replace_value_animation(mid_value, "5")
+        new_value = self.replace_value_animation(sum_value, "0 + 5 = 5", sum_text)
         mid.next_to(hi, DOWN)
-        self.play(FadeIn(mid), FadeOut(mid_value), FadeIn(new_value))
-        mid_value = new_value
+        self.play(FadeIn(mid))
+        self.wait(1)
+        self.play(FadeOut(sum_value), FadeIn(new_value))
+        sum_value = new_value
+        circle = Circle()
+        circle.surround(target_value)
+        self.wait(1)
+        self.play(FadeIn(circle))
+        self.wait(12)
+        self.play(FadeOut(mid), FadeOut(sum_value), FadeOut(sum_text), FadeOut(target_text), FadeOut(target_value), FadeOut(index_text), 
+                    FadeOut(index_value), FadeOut(array_object), FadeOut(arrow), FadeOut(lo), FadeOut(hi), FadeOut(mid))
 
     # given an old text value object, create a new text object with the new text value
     # plays an animation with the new value appearing and the old value fading, and then
     # returns an instance to the new text object
-    def replace_value_animation(self, text_object, val):
-        new_object = TextMobject(val)
-        new_object.set_x(text_object.get_x()).set_y(text_object.get_y())
+    def replace_value_animation(self, val_object, val, text_object):
+        new_object = Text(val)
+        new_object.next_to(text_object, RIGHT)
         # self.play(FadeIn(new_object), FadeOut(text_object))
         return new_object
 
