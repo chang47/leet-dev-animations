@@ -634,7 +634,7 @@ class EdgeCases(Scene):
 class IdentifyProblem(Scene):
     def construct(self):
         # 23 Show animation of the new section
-        problem = Text("Identifying Problem", color=WHITE).scale(2)
+        problem = Text("Identifying The Problem", color=WHITE).scale(2)
         problem.generate_target()
         problem.target.to_corner(UP+LEFT)
         problem.target.scale(0.65)
