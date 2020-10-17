@@ -634,18 +634,33 @@ class EdgeCases(Scene):
 class IdentifyProblem(Scene):
     def construct(self):
         # 23 Show animation of the new section
-        problem = Text("Identifying The Problem", color=WHITE).scale(2)
+        problem = TextMobject("Identifying The Problem", color=WHITE).scale(2)
         problem.generate_target()
         problem.target.to_corner(UP+LEFT)
-        problem.target.scale(0.65)
+        problem.target.shift(LEFT)
+        problem.target.scale(0.6)
 
-        # Maybe just move it to the top left corner instead of fading away
+        # Move it to the top left corner instead of fading away
         self.play(FadeIn(problem))
         self.wait(1)
         self.play(MoveToTarget(problem, run_time=2))
+        self.wait(1)
 
-        identify = Text("Find a pair of numbers in an array", color=WHITE).scale(1.5)
-        self.play(FadeIn(identify))
+        first = TextMobject("Clue:").scale(1.5)
+        rec = VGroup(first)
+        rec.shift(UP*1.25 + LEFT*1.75)
+        self.play(Write(first))
+
+        second = TextMobject("* Find a pair of numbers in an array").scale(1.25)
+        rec.add(second)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(second))
+        self.wait(3)
+        
+        # identify = Text("Find a pair of numbers in an array", color=WHITE).scale(1.5)
+        # self.play(FadeIn(identify))
+        self.play(Uncreate(problem), Uncreate(rec))
+        self.wait(1)
 
 
 class Smart(Scene):
@@ -731,3 +746,16 @@ class BruteForce(Scene):
                 self.play(FadeOut(total))
 
             self.play(FadeOut(hi_group))
+
+class Conclusion(Scene):
+    def construct(self):
+        self.wait(1)
+        algo = TextMobject("Two Pointer").scale(2)
+        w = TextMobject("with").scale(1.5)
+        title = TextMobject("LeetDev.io", tex_to_color_map={"LeetDev": RED_C, ".io": WHITE}).scale(2)
+        algo.next_to(w, UP)
+        title.next_to(w, DOWN)
+        self.play(GrowFromEdge(algo, UP), run_time=1)
+        self.play(ShowCreation(w), run_time=1)
+        self.play(GrowFromEdge(title, DOWN), run_time=1)
+        self.wait(5)
