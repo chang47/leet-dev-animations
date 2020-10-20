@@ -48,7 +48,7 @@ class BruteForce(Scene):
 
                 if profit > ans:
                     ans = profit
-                    values["max_value"] = self.changeText(values["max_text"], str(ans), values["max_value"])
+                    values["max_value"] = self.changeText(values["max_text"], str(ans), values["max_value"], True)
             self.play(FadeOut(arrow2))
     
     def createText(self, array_container):
@@ -72,10 +72,13 @@ class BruteForce(Scene):
         text_obj["current_value"] = current_value
         return text_obj
 
-    def changeText(self, text_object, new_value, value_object):
+    def changeText(self, text_object, new_value, value_object, grow=False):
         new_object = TextMobject(new_value)
         new_object.next_to(text_object, RIGHT)
-        self.play(FadeOut(value_object), FadeIn(new_object))
+        if grow:
+            self.play(FadeOut(value_object), GrowFromCenter(new_object))
+        else:
+            self.play(FadeOut(value_object), FadeIn(new_object))
         return new_object
 
 class Optimal(Scene):
@@ -84,7 +87,7 @@ class Optimal(Scene):
         arr = []
         array_object = Group()
         arr_index = 0
-        prices = [7,1,5,3,6,4] 
+        prices = [5, 3, 6, 1, 9] 
         for val in prices:
             value = TextMobject(str(val))
             square = Square().surround(value).set_width(1).set_height(1)
@@ -117,10 +120,10 @@ class Optimal(Scene):
             
             if profit > ans:
                 ans = profit
-                values["max_value"] = self.changeText(values["max_text"], str(ans), values["max_value"])
+                values["max_value"] = self.changeText(values["max_text"], str(ans), values["max_value"], True)
             elif prices[i] < min_num:
                 min_num = prices[i]
-                values["min_value"] = self.changeText(values["min_text"], str(prices[i]), values["min_value"])
+                values["min_value"] = self.changeText(values["min_text"], str(prices[i]), values["min_value"], True)
     
     def createText(self, array_container):
         text_obj = {}
@@ -143,7 +146,7 @@ class Optimal(Scene):
         text_obj["current_value"] = current_value
 
         min_text = Text("min:       ")
-        min_value = Text("7")
+        min_value = Text("5")
         min_text.next_to(current_text, DOWN)
         min_value.next_to(min_text, RIGHT)
         self.play(FadeIn(min_text), FadeIn(min_value))
@@ -151,10 +154,13 @@ class Optimal(Scene):
         text_obj["min_value"] = min_value
         return text_obj
 
-    def changeText(self, text_object, new_value, value_object):
+    def changeText(self, text_object, new_value, value_object, grow=False):
         new_object = TextMobject(new_value)
         new_object.next_to(text_object, RIGHT)
-        self.play(FadeOut(value_object), FadeIn(new_object))
+        if grow:
+            self.play(FadeOut(value_object), GrowFromCenter(new_object))
+        else:
+            self.play(FadeOut(value_object), FadeIn(new_object))
         return new_object
 
         
