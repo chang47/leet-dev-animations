@@ -254,3 +254,11 @@ class SlidingWindowExample(Scene):
     def transformText(self, text, value, location):
         text.target = Tex(value).scale(0.75).next_to(location, DOWN)
         self.play(MoveToTarget(text))
+
+class Conclusion(Scene):
+    def construct(self):
+        first = Tex("Conclusion").scale(1.5)
+        rec = VGroup(first)
+        rec.move_to(LEFT*4)
+        self.play(Write(rec, run_time=1))
+        self.wait(1)
