@@ -228,3 +228,28 @@ class Optimal(Scene):
     def transformText(self, text, value, location, multiple=1):
         text.target = Tex(value).scale(0.75).next_to(location, DOWN*multiple)
         self.play(MoveToTarget(text))
+
+class AlgorithmExplaination(Scene):
+    def construct(self):
+        first = TextMobject("Algorithm and Data Structures used:").scale(1.25)
+        rec = VGroup(first)
+        rec.move_to(UP + LEFT)
+
+        third = TextMobject("O(N²): Brute force every combination").scale(0.9)
+        four = TextMobject("O(N Log N): Sort the array and then scan through it").scale(0.9)
+        five = TextMobject("O(N): Use a Set to keep track of previously seen numbers").scale(0.9)
+
+        # https://www.reddit.com/r/manim/comments/iupbe8/how_to_left_align_textmobject/
+        self.play(Write(rec, run_time=2))
+        rec.add(third)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(third, run_time=1.5))
+        self.wait(1)
+        rec.add(four)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(four, run_time=1.5))
+        self.wait(1)
+        rec.add(five)
+        rec.arrange(DOWN, center=False, aligned_edge=LEFT)
+        self.play(Write(five, run_time=1.5))
+        self.wait(1)
